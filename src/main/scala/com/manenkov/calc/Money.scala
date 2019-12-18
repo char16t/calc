@@ -14,7 +14,7 @@ object Money {
    * for inflation or other factors that affect the true value of money
    * in the future. This is used in time value of money calculations.
    *
-   * @param monthly      Today's amount of every month saves
+   * @param monthly     Today's amount of every month saves
    * @param months      Number of months
    * @param returnValue Returns, percent value per annum (3% as 0.03)
    * @return Value of the amount at a specific date
@@ -84,5 +84,22 @@ object Money {
     for {
       month <- monthsSeq
     } yield nthMonthPayment(month)
+  }
+
+  /** Stream of monthly amount of savings.
+   *
+   * @param monthly Today's amount of every month saves
+   * @param inflationValue Inflation, percent value per annum (3% as 0.03)
+   * @param returnValue Returns, percent value per annum (3% as 0.03)
+   * @return Stream of monthly amount of savings.
+   */
+  def savingsPerMonth(monthly: Double, inflationValue: Double, returnValue: Double): LazyList[(Int, Double)] = {
+    lazy val stream: LazyList[(Int, Double)] = (0, 0.0) #:: stream.map { pair =>
+      val effectiveAnnualRate = pow(1.0 + inflationValue, 1.0 / 12.0) - 1.0
+      val month = pair._1
+      val sum = pair._2
+      (month + 1, (sum + monthly * pow(1.0 + effectiveAnnualRate, month)) * (1.0 + returnValue / 12.0))
+    }
+    stream.drop(1)
   }
 }

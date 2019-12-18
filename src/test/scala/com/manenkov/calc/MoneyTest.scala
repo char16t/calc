@@ -78,4 +78,30 @@ class MoneyTest extends FlatSpec with Matchers {
     actual.last === 660.63 should be (true)
     actualReversed.head === actual.last should be (true)
   }
+
+  it should "correctly calculate monthly savings sequence" in {
+    implicit val doubleEquality: Equality[Double] = TolerantNumerics.tolerantDoubleEquality(0.01)
+    implicit val listEquality: Equality[List[Double]] = new Equality[List[Double]] {
+      def areEqual(a: List[Double], b: Any): Boolean = {
+        def areEqualRec(a: List[Double], b: List[Double]): Boolean = {
+          (a, b) match {
+            case (Nil, Nil) => true
+            case (x :: xs, y :: ys) => x === y && areEquivalent(xs, ys)
+            case _ => false
+          }
+        }
+        b match {
+          case daList: List[Double] => areEqualRec(a, daList)
+          case _ => false
+        }
+      }
+    }
+
+    val monthly: Double = 100.0
+    val inflationValue: Double = 0.02
+    val returnValue: Double = 0.1
+
+    val savings = Money.savingsPerMonth(monthly, inflationValue, returnValue)
+    savings.take(3).map(_._2).toList === List(100.83, 202.67, 305.53) should be (true)
+  }
 }
