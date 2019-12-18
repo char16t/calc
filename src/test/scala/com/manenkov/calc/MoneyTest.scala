@@ -1,4 +1,4 @@
-package calc
+package com.manenkov.calc
 
 import org.scalactic.{Equality, Equivalence, TolerantNumerics}
 import org.scalatest._

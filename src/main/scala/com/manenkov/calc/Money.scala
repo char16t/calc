@@ -1,4 +1,4 @@
-package calc
+package com.manenkov.calc
 
 import scala.math.pow
 
