@@ -107,7 +107,7 @@ object Money {
    *
    * @param firstCPI  Initial consumer price index
    * @param secondCPI Next period consumer price index
-   * @return Inflation rate
+   * @return Inflation rate as double (example: 3% as 0.03)
    * @see See [[https://en.wikipedia.org/wiki/Inflation]] for more
    * @see See [[https://en.wikipedia.org/wiki/Consumer_price_index]] for more
    */
