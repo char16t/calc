@@ -114,4 +114,9 @@ class MoneyTest extends FlatSpec with Matchers {
     implicit val doubleEquality: Equality[Double] = TolerantNumerics.tolerantDoubleEquality(0.01)
     Money.consumerPriceIndex(2.5, 2.75) === 0.1 should be (true)
   }
+
+  it should "correctly calculate CPI for multiple items" in {
+    implicit val doubleEquality: Equality[Double] = TolerantNumerics.tolerantDoubleEquality(0.00000001)
+    Money.consumerPriceIndex(LazyList((15,17.5), (10,12.5), (30,33), (25,27))) === 0.125 should be (true)
+  }
 }

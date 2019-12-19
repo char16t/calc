@@ -126,4 +126,18 @@ object Money {
   def consumerPriceIndex(firstPrice: Double, secondPrice: Double): Double = {
     secondPrice / firstPrice - 1.0
   }
+
+  /** Consumer price index for multiple items.
+   *
+   * @param stream Stream of tuple (Initial price, Next period price)
+   * @return CPI as double (example: 3% as 0.03)
+   * @see See [[https://www.wikihow.com/Calculate-CPI]] for more
+   * @see See [[https://en.wikipedia.org/wiki/Consumer_price_index]] for more
+   */
+  def consumerPriceIndex(stream: LazyList[(Double, Double)]): Double = {
+    val sums = stream.foldLeft((0.0, 0.0))((acc: Tuple2[Double, Double], curr: Tuple2[Double, Double]) => {
+      (acc._1 + curr._1, acc._2 + curr._2)
+    })
+    sums._2 / sums._1 - 1.0
+  }
 }
