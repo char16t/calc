@@ -1,6 +1,6 @@
 package com.manenkov.calc
 
-import org.scalactic.{Equality, Equivalence, TolerantNumerics}
+import org.scalactic.{Equality, TolerantNumerics}
 import org.scalatest._
 import org.scalatest.matchers.should.Matchers
 
@@ -15,7 +15,7 @@ class MoneyTest extends FlatSpec with Matchers {
 
     val actual = Money.futureValue(monthly, months, returnValue)
     var expected: Double = 0.0
-    for (m <- 0 until months) {
+    for (_ <- 0 until months) {
       expected = (expected + monthly) * (1.0 + returnValue / 12.0)
     }
     actual === expected should be (true)
