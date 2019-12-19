@@ -1,5 +1,7 @@
 package com.manenkov.calc
 
+import java.time.LocalDateTime
+
 import scala.math.pow
 
 object Money {
@@ -139,5 +141,15 @@ object Money {
       (acc._1 + curr._1, acc._2 + curr._2)
     })
     sums._2 / sums._1 - 1.0
+  }
+
+  /** Returns the internal rate of return for a schedule of cash flows that is
+   *  not necessarily periodic.
+   *
+   *  @see [[https://www.klearlending.com/en/Blog/Articles/XIRR-demystified]]
+   *  @see [[https://github.com/klearlending/XIRR/tree/master/XIRRCalculator]]
+   */
+  def xirr(cashflows: Seq[(Double, LocalDateTime)], decimals: Int = 8, maxRate: Double = Double.MaxValue): Double = {
+    CalculationWrapper.XIRR(cashflows.map(x => CashFlowDates(x._1, x._2)), decimals, maxRate)
   }
 }

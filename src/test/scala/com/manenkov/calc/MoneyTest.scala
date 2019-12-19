@@ -1,5 +1,7 @@
 package com.manenkov.calc
 
+import java.time.LocalDateTime
+
 import org.scalactic.{Equality, TolerantNumerics}
 import org.scalatest._
 import org.scalatest.matchers.should.Matchers
@@ -118,5 +120,63 @@ class MoneyTest extends FlatSpec with Matchers {
   it should "correctly calculate CPI for multiple items" in {
     implicit val doubleEquality: Equality[Double] = TolerantNumerics.tolerantDoubleEquality(0.00000001)
     Money.consumerPriceIndex(LazyList((15,17.5), (10,12.5), (30,33), (25,27))) === 0.125 should be (true)
+  }
+
+  it should "correctly calculate XIRR" in {
+    implicit val doubleEquality: Equality[Double] = TolerantNumerics.tolerantDoubleEquality(0.000001)
+    val cf = Seq(
+      (-997.78, LocalDateTime.of(2019, 3, 1, 0, 0)),
+      (34.9, LocalDateTime.of(2019, 6, 19, 0, 0)),
+      (34.9, LocalDateTime.of(2019, 12, 18, 0, 0)),
+      (34.9, LocalDateTime.of(2020, 6, 17, 0, 0)),
+      (34.9, LocalDateTime.of(2020, 12, 16, 0, 0)),
+      (34.9, LocalDateTime.of(2021, 6, 16, 0, 0)),
+      (1034.9, LocalDateTime.of(2021, 12, 15, 0, 0)),
+    )
+    val ex = 0.0778696
+    Money.xirr(cf) === ex should be (true)
+
+    val cf1 = Seq(
+      (-1000.0, LocalDateTime.of(2017, 1, 1, 0, 0)),
+      (1010.0, LocalDateTime.of(2018, 1, 1, 0, 0)),
+    )
+    val ex1 = 0.01
+    Money.xirr(cf1) == ex1 should be (true)
+
+    val cf2 = Seq(
+      (-500.0, LocalDateTime.of(2017, 1, 1, 0, 0)),
+      (-500.0, LocalDateTime.of(2017, 2, 1, 0, 0)),
+      (-500.0, LocalDateTime.of(2017, 3, 1, 0, 0)),
+      (-500.0, LocalDateTime.of(2017, 4, 1, 0, 0)),
+      (-500.0, LocalDateTime.of(2017, 5, 1, 0, 0)),
+      (-500.0, LocalDateTime.of(2017, 6, 1, 0, 0)),
+      (-500.0, LocalDateTime.of(2017, 7, 1, 0, 0)),
+      (-500.0, LocalDateTime.of(2017, 8, 1, 0, 0)),
+      (-500.0, LocalDateTime.of(2017, 9, 1, 0, 0)),
+      (-500.0, LocalDateTime.of(2017, 10, 1, 0, 0)),
+      (-500.0, LocalDateTime.of(2017, 11, 1, 0, 0)),
+      (-500.0, LocalDateTime.of(2017, 12, 1, 0, 0)),
+      (6545.08, LocalDateTime.of(2018, 1, 1, 0, 0)),
+    )
+    val ex2 = 0.171156
+    Money.xirr(cf2) === ex2 should be (true)
+  }
+
+  it should "throw exception if XIRR cannot be calculated (< 0)" in {
+    val cf1 = Seq(
+      (-1000.0, LocalDateTime.of(2017, 1, 1, 0, 0)),
+    )
+    assertThrows[IncosistentCashFlowException] {
+      Money.xirr(cf1)
+    }
+  }
+
+  it should "throw exception if XIRR cannot be calculated (> 0)" in {
+    val cf1 = Seq(
+      (1000.0, LocalDateTime.of(2017, 1, 1, 0, 0)),
+    )
+    assertThrows[IncosistentCashFlowException] {
+      Money.xirr(cf1)
+    }
   }
 }
