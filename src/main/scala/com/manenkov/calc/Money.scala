@@ -88,9 +88,9 @@ object Money {
 
   /** Stream of monthly amount of savings.
    *
-   * @param monthly Today's amount of every month saves
+   * @param monthly        Today's amount of every month saves
    * @param inflationValue Inflation, percent value per annum (3% as 0.03)
-   * @param returnValue Returns, percent value per annum (3% as 0.03)
+   * @param returnValue    Returns, percent value per annum (3% as 0.03)
    * @return Stream of monthly amount of savings.
    */
   def savingsPerMonth(monthly: Double, inflationValue: Double, returnValue: Double): LazyList[(Int, Double)] = {
@@ -101,5 +101,17 @@ object Money {
       (month + 1, (sum + monthly * pow(1.0 + effectiveAnnualRate, month)) * (1.0 + returnValue / 12.0))
     }
     stream.drop(1)
+  }
+
+  /** Calculate inflation rate by CPIs on current and previous periods.
+   *
+   * @param firstCPI  Initial consumer price index
+   * @param secondCPI Next period consumer price index
+   * @return Inflation rate
+   * @see See [[https://en.wikipedia.org/wiki/Inflation]] for more
+   * @see See [[https://en.wikipedia.org/wiki/Consumer_price_index]] for more
+   */
+  def inflationRate(firstCPI: Double, secondCPI: Double): Double = {
+    (secondCPI - firstCPI) / firstCPI
   }
 }

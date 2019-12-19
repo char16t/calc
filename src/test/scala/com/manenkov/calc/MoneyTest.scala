@@ -104,4 +104,10 @@ class MoneyTest extends FlatSpec with Matchers {
     val savings = Money.savingsPerMonth(monthly, inflationValue, returnValue)
     savings.take(3).map(_._2).toList === List(100.83, 202.67, 305.53) should be (true)
   }
+
+  it should "correctly calculate inflation rate" in {
+    implicit val doubleEquality: Equality[Double] = TolerantNumerics.tolerantDoubleEquality(0.01)
+
+    Money.inflationRate(1000.0, 1110.0) should be (0.11)
+  }
 }
