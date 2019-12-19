@@ -107,7 +107,11 @@ class MoneyTest extends FlatSpec with Matchers {
 
   it should "correctly calculate inflation rate" in {
     implicit val doubleEquality: Equality[Double] = TolerantNumerics.tolerantDoubleEquality(0.01)
+    Money.inflationRate(1000.0, 1110.0) === 0.11 should be (true)
+  }
 
-    Money.inflationRate(1000.0, 1110.0) should be (0.11)
+  it should "correctly calculate CPI for single item" in {
+    implicit val doubleEquality: Equality[Double] = TolerantNumerics.tolerantDoubleEquality(0.01)
+    Money.consumerPriceIndex(2.5, 2.75) === 0.1 should be (true)
   }
 }

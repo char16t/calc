@@ -114,4 +114,16 @@ object Money {
   def inflationRate(firstCPI: Double, secondCPI: Double): Double = {
     (secondCPI - firstCPI) / firstCPI
   }
+
+  /** Consumer price index for single item.
+   *
+   * @param firstPrice Initial price
+   * @param secondPrice Next period price
+   * @return CPI as double (example: 3% as 0.03)
+   * @see See [[https://www.wikihow.com/Calculate-CPI]] for more
+   * @see See [[https://en.wikipedia.org/wiki/Consumer_price_index]] for more
+   */
+  def consumerPriceIndex(firstPrice: Double, secondPrice: Double): Double = {
+    secondPrice / firstPrice - 1.0
+  }
 }
