@@ -135,7 +135,7 @@ val monthly: Double = 100.0
 val inflationValue: Double = 0.02
 val returnValue: Double = 0.1
 val savings = Money.savingsPerMonth(monthly, inflationValue, returnValue)
-// savings is List(100.83, 202.67, 305.53, ...)
+// savings is LazyList(100.83, 202.67, 305.53, ...)
 ```
 
 This can be expressed as a formula
