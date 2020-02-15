@@ -173,6 +173,30 @@ val payments = Money.variableMonthlyPayments(amount, months, inflationValue, ret
 // payments is List(542.84, 543.74, 544.63, ..., 660.63)
 ```
 
+## XIRR
+
+`XIRR` is Excel function that helps calculate [internal rate of return](https://en.wikipedia.org/wiki/Internal_rate_of_return) for non-periodical payments. Example:
+
+![](docs/xirr1.png)
+![](docs/xirr2.png)
+
+This repo contains Scala implementation for XIRR. Example of calculation like on image:
+
+```scala
+val cf = Seq(
+  (-997.78, LocalDateTime.of(2019, 3, 1, 0, 0)),
+  (34.9, LocalDateTime.of(2019, 6, 19, 0, 0)),
+  (34.9, LocalDateTime.of(2019, 12, 18, 0, 0)),
+  (34.9, LocalDateTime.of(2020, 6, 17, 0, 0)),
+  (34.9, LocalDateTime.of(2020, 12, 16, 0, 0)),
+  (34.9, LocalDateTime.of(2021, 6, 16, 0, 0)),
+  (1034.9, LocalDateTime.of(2021, 12, 15, 0, 0)),
+)
+val expected = 0.0778696
+Money.xirr(cf) == expected                                             // true
+Money.xirr(cf, decimals = 8, maxRate = Double.MaxValue) == expected    // true
+```
+
 ## Thanks
 
  * Chris Degnen for [answer on Stack Overflow](https://money.stackexchange.com/questions/117540/how-much-do-i-need-to-invest-monthly-to-accumulate-a-given-amount)
