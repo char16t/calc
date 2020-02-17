@@ -2,6 +2,19 @@ Financial calculator
 
 ## Usage
 
+***From Bintray***
+ [ ![Download](https://api.bintray.com/packages/char16t/maven/calc/images/download.svg) ](https://bintray.com/char16t/maven/calc/_latestVersion)
+
+Add to your `build.sbt`:
+
+```scala
+resolvers += Resolver.jcenterRepo
+resolvers += Resolver.bintrayRepo("char16t", "maven")
+libraryDependencies += "com.manenkov" %% "calc" % "0.1"
+```
+
+***From source code***
+
 Clone, build and publish library to local repository.
 ```bash
 git clone https://github.com/char16t/calc
