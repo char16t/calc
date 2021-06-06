@@ -17,7 +17,7 @@ sbt publishLocal
 
 Add to your `build.sbt` (Scala 2.13.1 or higher):
 ```scala
-libraryDependencies += "com.manenkov" %% "calc" % "0.1"
+libraryDependencies += "com.manenkov" %% "calc" % "0.2"
 ```
 
 Library provides methods:
