@@ -3,15 +3,8 @@ Financial calculator
 ## Usage
 
 ***From Bintray***
- [ ![Download](https://api.bintray.com/packages/char16t/maven/calc/images/download.svg) ](https://bintray.com/char16t/maven/calc/_latestVersion)
 
-Add to your `build.sbt`:
-
-```scala
-resolvers += Resolver.jcenterRepo
-resolvers += Resolver.bintrayRepo("char16t", "maven")
-libraryDependencies += "com.manenkov" %% "calc" % "0.1"
-```
+[Not available from May 1, 2021](https://jfrog.com/blog/into-the-sunset-bintray-jcenter-gocenter-and-chartcenter/). Use GitHub Registry.
 
 ***From source code***
 
