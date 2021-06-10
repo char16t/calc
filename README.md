@@ -4,7 +4,7 @@ Financial calculator
 
 ***From Bintray***
 
-[Not available from May 1, 2021](https://jfrog.com/blog/into-the-sunset-bintray-jcenter-gocenter-and-chartcenter/). Use GitHub Registry.
+[Not available from May 1, 2021](https://jfrog.com/blog/into-the-sunset-bintray-jcenter-gocenter-and-chartcenter/). Use GitHub Packages.
 
 ***From source code***
 
