@@ -2,10 +2,6 @@ Financial calculator
 
 ## Usage
 
-***From Bintray***
-
-[Not available from May 1, 2021](https://jfrog.com/blog/into-the-sunset-bintray-jcenter-gocenter-and-chartcenter/). Use GitHub Packages.
-
 ***From source code***
 
 Clone, build and publish library to local repository.
